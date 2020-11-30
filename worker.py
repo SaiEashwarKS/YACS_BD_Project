@@ -14,6 +14,7 @@ import random
 import numpy as np
 from time import *
 from datetime import *
+import os
 
 w_id = sys.argv[2]
 #f = open("log/worker_"+w_id+".txt", "w")    #LOG FILE
@@ -168,6 +169,10 @@ taskLock = threading.Lock()
 workerLock = threading.Lock()          
 
 if __name__ == "__main__":
+    try:
+        os.mkdir('log')
+    except:
+        pass #dir already exists
     #delete previous log file
     f = open("log/worker_"+w_id+".txt", "w")
     f.close()
