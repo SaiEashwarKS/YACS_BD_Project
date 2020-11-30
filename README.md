@@ -1,7 +1,7 @@
 # YACS
 YACS stands for Yet Another Centralized Scheduler. This is used to schedule map and reduce tasks on several workers. Every worker has some number of slots (compute). Each slot can execute one task. The number of slots in different workers can be different. The configuration of each worker is sent as json to the master via config.json. 
 
-Master.py : consists of 3 threads
+Master.py : consists of 3 threads. Master listens to job requests from requests.py from port 5000. Worker receives updates from workers from port 5001.
 ![master_threads](https://github.com/SaiEashwarKS/YACS_BD_Project/blob/main/MasterFlowchart.png)
 
 Worker.py : consists of 2 threads
