@@ -2,10 +2,10 @@
 YACS stands for Yet Another Centralized Scheduler. This is used to schedule map and reduce tasks on several workers. Every worker has some number of slots (compute). Each slot can execute one task. The number of slots in different workers can be different. The configuration of each worker is sent as json to the master via config.json. 
 
 Master.py : consists of 3 threads. Master listens to job requests from requests.py from port 5000. Master receives updates from workers from port 5001.
-![master_threads](https://github.com/SaiEashwarKS/YACS_BD_Project/blob/main/MasterFlowchart.png)
+![master_threads](https://github.com/SaiEashwarKS/YACS_BD_Project/blob/main/images/MasterFlowchart.png)
 
 Worker.py : consists of 2 threads
-![worker_threads](https://github.com/SaiEashwarKS/YACS_BD_Project/blob/main/WorkerFlowchart.png)
+![worker_threads](https://github.com/SaiEashwarKS/YACS_BD_Project/blob/main/images/WorkerFlowchart.png)
 
 requests.py : generate n number of requests with random number of map and reduce tasks for every job.
 Format of request message:
@@ -89,7 +89,7 @@ After executing the YACS at least once (and without deleting the log files), run
 - plot graph of number of tasks on each worker against worker for all the 3 scheduling algorithms
 
 # Graph of number of tasks on each worker against worker for all the 3 scheduling algorithms for a request of 20 jobs with random.seed of 1 in requests.py
-![graph for Round Robin Scheduling](https://github.com/SaiEashwarKS/YACS_BD_Project/blob/main/RR_graph.png)
-![graph for Random Scheduling](https://github.com/SaiEashwarKS/YACS_BD_Project/blob/main/RANDOM_graph.png)
-![graph for Least Loaded Scheduling](https://github.com/SaiEashwarKS/YACS_BD_Project/blob/main/LL_graph.png)
+![graph for Round Robin Scheduling](https://github.com/SaiEashwarKS/YACS_BD_Project/blob/main/images/RR_graph.png)
+![graph for Random Scheduling](https://github.com/SaiEashwarKS/YACS_BD_Project/blob/main/images/RANDOM_graph.png)
+![graph for Least Loaded Scheduling](https://github.com/SaiEashwarKS/YACS_BD_Project/blob/main/images/LL_graph.png)
 
