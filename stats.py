@@ -44,8 +44,8 @@ for i in range(1,4):
                 exec_time_list.append(execution_time[task_id].total_seconds())
     file1.close()
                 
-print("Mean execution time of tasks:", statistics.mean(exec_time_list)) 
-print("Median execution time of tasks:", statistics.median(exec_time_list)) 
+print("Mean execution time of tasks:", statistics.mean(exec_time_list), 's') 
+print("Median execution time of tasks:", statistics.median(exec_time_list), 's') 
 
 incoming_time = {}
 completion_time = {}
@@ -88,8 +88,8 @@ with open("log/master.txt", 'r') as f:
                 job_execution_time_list.append(job_execution_time[job_id].total_seconds())
                 #print(job_id, job_execution_time[job_id].total_seconds())
                 
-print("Mean execution time of jobs:", statistics.mean(job_execution_time_list)) 
-print("Median execution time of jobs:", statistics.median(job_execution_time_list))
+print("Mean execution time of jobs:", statistics.mean(job_execution_time_list), 's') 
+print("Median execution time of jobs:", statistics.median(job_execution_time_list), 's')
 
 #plot graphs
 number_tasks = {1:0, 2:0, 3:0}
