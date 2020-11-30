@@ -83,7 +83,12 @@ Note : Create an empty directory named 'log' when executing YACS for the first t
 ```
 
 
-# Graph of number of tasks on each worker against worker for all the 3 scheduling algorithms
+After executing the YACS at least once (and without deleting the log files), running stats.py will calculate
+- the mean and median time of execution of all tasks (in seconds)
+- the mean and median time of execution of all jobs (in seconds)
+- plot graph of number of tasks on each worker against worker for all the 3 scheduling algorithms
+
+# Graph of number of tasks on each worker against worker for all the 3 scheduling algorithms for a request of 20 jobs with random.seed of 1 in requests.py
 ![graph for Round Robin Scheduling](https://github.com/SaiEashwarKS/YACS_BD_Project/blob/main/RR_graph.png)
 ![graph for Random Scheduling](https://github.com/SaiEashwarKS/YACS_BD_Project/blob/main/RANDOM_graph.png)
 ![graph for Least Loaded Scheduling](https://github.com/SaiEashwarKS/YACS_BD_Project/blob/main/LL_graph.png)
