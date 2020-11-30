@@ -4,7 +4,7 @@ YACS stands for Yet Another Centralized Scheduler. This is used to schedule map 
 master.py : consists of 3 threads
 ![master_threads](https://github.com/SaiEashwarKS/YACS_BD_Project/blob/main/MasterFlowchart.png)
 
-worker.py : consists of 3 threads
+worker.py : consists of 2 threads
 ![worker_threads](https://github.com/SaiEashwarKS/YACS_BD_Project/blob/main/WorkerFlowchart.png)
 
 requests.py : generate n number of requests with random number of map and reduce tasks for every job.
