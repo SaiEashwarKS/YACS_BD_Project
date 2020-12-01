@@ -98,6 +98,26 @@ After executing the YACS at least once (and without deleting the log files), run
 - the mean and median time of execution of all jobs (in seconds)
 - plot graph of number of tasks on each worker against worker for all the 3 scheduling algorithms
 
+# analysis.py
+(must be run after executing YACS at least once and without deleting the log files/folder)
+```sh
+python analysis.py
+```
+- plots bar graph of executiuon time of tasks
+- computes the mean and median of execution times of tasks
+- plots bar plot of execution time of jobs
+- computes the mean and median of execution times of jobs
+- plots a graph of number of tasks on each worker against worker
+
+# Bar plots of task and job execution times for RANDOM scheduling for a request of 5 jobs with random.seed of 1 in requests.py
+![task execution times bar plot](https://github.com/SaiEashwarKS/YACS_BD_Project/blob/main/images/TaskExecutionGraph.png)
+Mean execution time of tasks: 3.3261716666666667 s
+Median execution time of tasks: 3.359166 s
+
+![job execution times bar plot](https://github.com/SaiEashwarKS/YACS_BD_Project/blob/main/images/JobExecutionGraph.png)
+Mean execution time of jobs: 8.543104 s
+Median execution time of jobs: 8.92703 s
+
 # Graph of number of tasks on each worker against worker for all the 3 scheduling algorithms for a request of 20 jobs with random.seed of 1 in requests.py
 ![graph for Round Robin Scheduling](https://github.com/SaiEashwarKS/YACS_BD_Project/blob/main/images/RR_graph.png)
 ![graph for Random Scheduling](https://github.com/SaiEashwarKS/YACS_BD_Project/blob/main/images/RANDOM_graph.png)
