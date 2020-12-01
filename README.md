@@ -1,10 +1,10 @@
 # YACS
 YACS stands for Yet Another Centralized Scheduler. This is used to schedule map and reduce tasks on several workers. Every worker has some number of slots (compute). Each slot can execute one task. The number of slots in different workers can be different. The configuration of each worker is sent as json to the master via config.json. 
 
-Master.py : consists of 3 threads. Master listens to job requests from requests.py from port 5000. Master receives updates from workers from port 5001.
+master.py : consists of 3 threads. Master listens to job requests from requests.py from port 5000. Master receives updates from workers from port 5001.
 ![master_threads](https://github.com/SaiEashwarKS/YACS_BD_Project/blob/main/images/MasterFlowchart.png)
 
-Worker.py : consists of 2 threads
+worker.py : consists of 2 threads
 ![worker_threads](https://github.com/SaiEashwarKS/YACS_BD_Project/blob/main/images/WorkerFlowchart.png)
 
 requests.py : generate n number of requests with random number of map and reduce tasks for every job.
@@ -58,25 +58,34 @@ There are three scheduling algorithms:
 # Steps to execute YACS
 modules that will be imported:
 >numpy
+
 >random
+
 >matplotlib
+
 >threading
+
 >json
+
 >time
+
 >datetime
+
 >socket
+
 >statistics
+
 >os
 
 Note : Create an empty directory named 'log' when executing YACS for the first time
 
-- run Master.py 
+- run master.py 
 ```sh 
-        python Master.py </path/to/config.json> <scheduling_algo(RR/RANDOM/LL)> 
+        python master.py </path/to/config.json> <scheduling_algo(RR/RANDOM/LL)> 
 ```
-- run Worker.py in as many consoles as there are workers
+- run worker.py in as many consoles as there are workers
 ```sh
-        python Worker.py <port> <worker_id>
+        python worker.py <port> <worker_id>
 ```
 - run requests.py with the number of requests needed
 ```sh
