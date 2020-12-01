@@ -58,13 +58,13 @@ class Worker:
             self.slots = 3
             self.free_slots = 3
             self.exec_pool = [0 for _ in range(3)]
+        printLock.acquire()
         with open("log/worker_"+w_id+".txt", "a+") as f:
-            printLock.acquire()
             f.write(str(datetime.now()) + ":\tWORKER HAS STARTED = [worker_id:{0}, port:{1}, slots:{2}]\n".format(
             self.worker_id,
             self.port,
             self.slots))
-            printLock.release()
+        printLock.release()
     
     #CHECKS FOR FREE SLOTS IN THE WORKER
     def free_slots(self):
@@ -79,12 +79,12 @@ class Worker:
     #LAUNCHING THE RECEIVED TASK ON A FREE SLOT
     def launch_task(self, task_dict):
         task = Task(task_dict["job_id"], task_dict["task_id"], task_dict["duration"])
+        printLock.acquire()
         with open("log/worker_"+w_id+".txt", "a+") as f:
-            printLock.acquire()
             f.write(str(datetime.now()) + ":\tSTARTED EXECUTING TASK = [job_id:{0}, task_id:{1}]\n".format(
                 task_dict["job_id"],
                 task_dict["task_id"]))
-            printLock.release()
+        printLock.release()
         #workerLock.acquire()
         for i in range(len(self.exec_pool)):
             if (isinstance(self.exec_pool[i], int) and self.exec_pool[i] == 0):
@@ -111,21 +111,21 @@ def get_task_launch_msg(worker):
         s.listen(1024)
         while True:
             c, addr = s.accept()
+            printLock.acquire()
             with open("log/worker_"+w_id+".txt", "a+") as f:
-                printLock.acquire()
                 f.write(str(datetime.now()) + ":\tINCOMING CONNECTION ESTABLISHED = [host:{0}, port:{1}]\n".format(addr[0], addr[1]))
-                printLock.release()
+            printLock.release()
             with c:
                 task_launch_msg_json = c.recv(1024).decode()
                 if task_launch_msg_json:
                     task = json.loads(task_launch_msg_json)
+                    printLock.acquire()
                     with open("log/worker_"+w_id+".txt", "a+") as f:
-                        printLock.acquire()
                         f.write(str(datetime.now()) + ":\tRECEIVED TASK = [job_id:{0}, task_id:{1}, duration:{2}]\n".format(
                             task["job_id"], 
                             task["task_id"], 
                             task["duration"]))
-                        printLock.release()
+                    printLock.release()
                     workerLock.acquire()
                     worker.launch_task(task)
                     workerLock.release()
@@ -151,10 +151,11 @@ def execution_of_tasks(worker):
                     "job_id": job_id, 
                     "task_id": task_id
                     }
+                
+                printLock.acquire()
                 with open("log/worker_"+w_id+".txt", "a+") as f:
-                    printLock.acquire()
                     f.write(str(datetime.now()) + ":\tFINISHED EXECUTING TASK = [job_id:{0}, task_id:{1}]\n".format(job_id, task_id))
-                    printLock.release()
+                printLock.release()
                 
                 workerLock.acquire()
                 worker.remove_task(i)
@@ -164,15 +165,17 @@ def execution_of_tasks(worker):
                 s = socket(AF_INET, SOCK_STREAM)
                 with s:
                     s.connect(('localhost', 5001))
-                    with open("log/worker_"+w_id+".txt", "a+") as f:
-                        printLock.acquire()
-                        f.write(str(datetime.now()) + ":\tOUTGOING CONNECTION ESTABLISHED = [host:{0}, port:{1}]\n".format("localhost", "5001"))
-                        printLock.release()
-                    s.send(msg_str.encode())
-                with open("log/worker_"+w_id+".txt", "a+") as f:
+                    
                     printLock.acquire()
-                    f.write(str(datetime.now()) + ":\tUPDATE SENT TO MASTER = [job_id:{0}, task_id:{1}] COMPLETED\n".format(job_id, task_id))
+                    with open("log/worker_"+w_id+".txt", "a+") as f:
+                        f.write(str(datetime.now()) + ":\tOUTGOING CONNECTION ESTABLISHED = [host:{0}, port:{1}]\n".format("localhost", "5001"))
                     printLock.release()
+                    s.send(msg_str.encode())
+                    
+                printLock.acquire()
+                with open("log/worker_"+w_id+".txt", "a+") as f:
+                    f.write(str(datetime.now()) + ":\tUPDATE SENT TO MASTER = [job_id:{0}, task_id:{1}] COMPLETED\n".format(job_id, task_id))
+                printLock.release()
             else:
                 workerLock.acquire()
                 worker.exec_pool[i].reduce()
