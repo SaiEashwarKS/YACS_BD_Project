@@ -63,16 +63,16 @@ def scheduler():
                 #print("Sending task", task['task_id'], "to worker", worker_id, "on port", port)
                 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                     s.connect(("localhost", port))
-                    with open("log/master.txt", "a+") as f:
-                        printLock.acquire()
-                        f.write(str(datetime.now()) + "\tOUTGOING CONNECTION ESTABLISHED = [host:{0}, port:{1}]\n".format("localhost", port))
-                        printLock.release()
-                    s.send(task_message.encode())
-                with open("log/master.txt", "a+") as f:
                     printLock.acquire()
-                    f.write(str(datetime.now()) + "\tSENT TASK TO WORKER= [worker_id:{0}, task_id:{1}, job_id:{1}, duration:{1}]\n".format(\
-                            worker_id, task['task_id'], task['job_id'], task['duration']))
+                    with open("log/master.txt", "a+") as f:
+                        f.write(str(datetime.now()) + "\tOUTGOING CONNECTION ESTABLISHED = [host:{0}, port:{1}]\n".format("localhost", port))
                     printLock.release()
+                    s.send(task_message.encode())
+                printLock.acquire()
+                with open("log/master.txt", "a+") as f:
+                    f.write(str(datetime.now()) + "\tSENT TASK TO WORKER= [worker_id:{0}, task_id:{1}, job_id:{2}, duration:{3}]\n".format(\
+                            worker_id, task['task_id'], task['job_id'], task['duration']))
+                printLock.release()
                 print("Sent task", task['task_id'], "to worker", worker_id, "on port", port)
                 
                 workerLock.acquire()
@@ -96,20 +96,20 @@ def getRequests():
         s.listen(1000)
         while(True):
             c, addr = s.accept()
-            with open("log/master.txt", "a+") as f:
-                printLock.acquire()
+            printLock.acquire()
+            with open("log/master.txt", "a+") as f:                
                 f.write(str(datetime.now()) + "\tINCOMING CONNECTION ESTABLISHED = [host:{0}, port:{1}]\n".format(addr[0], addr[1]))
-                printLock.release()
+            printLock.release()
             with c:
                 req = c.recv(100000)
                 req = json.loads(req)
                 mapTaskIds = [i['task_id'] for i in req['map_tasks']]
                 reduceTaskIds = [i['task_id'] for i in req['reduce_tasks']]
-                with open("log/master.txt", "a+") as f:
-                    printLock.acquire()
+                printLock.acquire()
+                with open("log/master.txt", "a+") as f:                    
                     f.write(str(datetime.now()) + "\tRECEIVED JOB REQUEST = [job_id:{0}, map_tasks_ids:{1}, reduce_tasks_ids:{2}]\n".format(\
                             req['job_id'], mapTaskIds, reduceTaskIds))
-                    printLock.release()
+                printLock.release()
                 mapTaskCounts[req['job_id']] = {}
                 no_map_tasks = len(req['map_tasks'])
                 mapTaskCounts[req['job_id']] = no_map_tasks #number of map tasks
@@ -153,28 +153,28 @@ def getUpdatesWorkers():
         s.listen(1000)
         while(True):
             c, addr = s.accept()
+            printLock.acquire()
             with open("log/master.txt", "a+") as f:
-                printLock.acquire()
                 f.write(str(datetime.now()) + "\tINCOMING CONNECTION ESTABLISHED = [host:{0}, port:{1}]\n".format(addr[0], addr[1]))
-                printLock.release()
+            printLock.release()
             with c:
                 update_json = c.recv(1000)
                 update = json.loads(update_json)
                 worker_id = update['worker_id']
                 job_id = update['job_id']
                 task_id = update['task_id']
+                printLock.acquire()
                 with open("log/master.txt", "a+") as f:
-                    printLock.acquire()
                     f.write(str(datetime.now()) + "\tUPDATE RECEIVED FROM WORKER = [worker_id:{0}, task_id:{1}] TASK COMPLETED\n"\
                             .format(worker_id, task_id))
-                    printLock.release()
+                printLock.release()
                 print("Task", task_id, "completed execution in", worker_id)
                 jobTaskCounts[job_id] -= 1
                 if jobTaskCounts[job_id] == 0:
+                    printLock.acquire()
                     with open("log/master.txt", "a+") as f:
-                        printLock.acquire()
                         f.write(str(datetime.now()) + "\tFINISHED EXECUTING JOB = [job_id:{0}]\n".format(job_id))
-                        printLock.release()
+                    printLock.release()
                 workerLock.acquire()
                 availableSlots[worker_id]['slots'] += 1
                 workerLock.release()
