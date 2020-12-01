@@ -15,7 +15,10 @@ for i in range(1,4):
         tp_split = line.split("\t") #tp_split stands for TIMESTAMP_PROGRESS_SPLIT
         #print(tp_split)
         timestamp_string = tp_split[0][0:-1]
-        dt = datetime.datetime.strptime(timestamp_string, '%Y-%m-%d %H:%M:%S.%f')
+        try:
+            dt = datetime.datetime.strptime(timestamp_string, '%Y-%m-%d %H:%M:%S.%f')
+        except:
+            continue
         #print(dt)
         #print(tp_split[1])
         
@@ -69,7 +72,10 @@ with open("log/master.txt", 'r') as f:
         tp_split = line.split("\t") #tp_split stands for TIMESTAMP_PROGRESS_SPLIT
         #print(tp_split)
         timestamp_string = tp_split[0][0:-1]
-        dt = datetime.datetime.strptime(timestamp_string, '%Y-%m-%d %H:%M:%S.%f')
+        try:
+            dt = datetime.datetime.strptime(timestamp_string, '%Y-%m-%d %H:%M:%S.%f')
+        except:
+            continue
         #print(dt)
         
         mj_split = tp_split[1].split("=")       #mj_split stands for MESSAGE_JOB_SPLIT
@@ -133,7 +139,10 @@ with open("log/master.txt", 'r') as f:
             #print(tp_split)
             timestamp_string = tp_split[0][0:-1]
             #print(timestamp_string)
-            dt = datetime.datetime.strptime(timestamp_string, '%Y-%m-%d %H:%M:%S.%f')
+            try:
+                dt = datetime.datetime.strptime(timestamp_string, '%Y-%m-%d %H:%M:%S.%f')
+            except:
+                continue
             #print(dt)
 
             mt_split = tp_split[1].split("=")       #mt_split stands for MESSAGE_TASK_SPLIT
