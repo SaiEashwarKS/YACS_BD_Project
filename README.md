@@ -111,11 +111,15 @@ python analysis.py
 
 # Bar plots of task and job execution times for RANDOM scheduling for a request of 5 jobs with random.seed of 1 in requests.py
 ![task execution times bar plot](https://github.com/SaiEashwarKS/YACS_BD_Project/blob/main/images/TaskExecutionGraph.png)
+
 Mean execution time of tasks: 3.3261716666666667 s
+
 Median execution time of tasks: 3.359166 s
 
 ![job execution times bar plot](https://github.com/SaiEashwarKS/YACS_BD_Project/blob/main/images/JobExecutionGraph.png)
+
 Mean execution time of jobs: 8.543104 s
+
 Median execution time of jobs: 8.92703 s
 
 # Graph of number of tasks on each worker against worker for all the 3 scheduling algorithms for a request of 20 jobs with random.seed of 1 in requests.py
