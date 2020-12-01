@@ -77,7 +77,6 @@ modules that will be imported:
 
 >os
 
-Note : Create an empty directory named 'log' when executing YACS for the first time
 
 - run master.py 
 ```sh 
