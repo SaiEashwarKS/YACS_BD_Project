@@ -58,14 +58,15 @@ There are three scheduling algorithms:
 # Steps to execute YACS
 modules that will be imported:
 >numpy
-random
-matplotlib
-threading
-json
-time
-datetime
-socket
-statistics
+>random
+>matplotlib
+>threading
+>json
+>time
+>datetime
+>socket
+>statistics
+>os
 
 Note : Create an empty directory named 'log' when executing YACS for the first time
 
