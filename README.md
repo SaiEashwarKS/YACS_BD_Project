@@ -56,6 +56,9 @@ There are three scheduling algorithms:
 
 
 # Steps to execute YACS
+
+NOTE: All our testing and execution was done on Windows 10
+
 modules that will be imported:
 >numpy
 
