@@ -89,6 +89,8 @@ modules that will be imported:
 ```sh
         python worker.py <port> <worker_id>
 ```
+(Assumption made in worker.py : we have hardcoded the number of slots for a worker based on worker_id as we are not entering the number of slots as command line input
+)
 - run requests.py with the number of requests needed
 ```sh
         python requests.py <no_of_requests>
