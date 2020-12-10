@@ -107,7 +107,7 @@ After executing the YACS at least once (and without deleting the log files), run
 ```sh
 python analysis.py
 ```
-- plots bar graph of executiuon time of tasks
+- plots bar graph of execution time of tasks
 - computes the mean and median of execution times of tasks
 - plots bar plot of execution time of jobs
 - computes the mean and median of execution times of jobs
