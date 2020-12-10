@@ -127,7 +127,10 @@ with open("log/master.txt", 'r') as f:
     first_line = lines[0]
     tp_split = first_line.split("\t") #tp_split stands for TIMESTAMP_PROGRESS_SPLIT
     timestamp_string = tp_split[0][0:-1]
-    dt = datetime.datetime.strptime(timestamp_string, '%Y-%m-%d %H:%M:%S.%f')
+    try:
+        dt = datetime.datetime.strptime(timestamp_string, '%Y-%m-%d %H:%M:%S.%f')
+    except:
+        pass
     start_time = dt
     for worker_id in x_axis:
         x_axis[worker_id].append(0)
